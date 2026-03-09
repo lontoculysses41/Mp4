@@ -5,65 +5,63 @@
 <title>SOID System Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  /* Make body fill the screen */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
   body, html {
-    margin: 0;
-    padding: 0;
     height: 100%;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    background: #000;
   }
 
   /* Full-screen video */
   #bg-video {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-    transform: translate(-50%, -50%);
-    background-size: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* ← KEY FIX: fills screen properly */
+    z-index: 0;          /* ← was -1, now visible */
+  }
+
+  /* Dark overlay so text is readable */
+  .overlay-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
   }
 
   /* Overlay text */
   .overlay {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     color: white;
     text-align: center;
-    transform: translate(-50%, -50%);
     text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    z-index: 2;
   }
 
-  .overlay h1 {
-    font-size: 3em;
-    margin: 0;
-  }
+  .overlay h1 { font-size: 3em; margin-bottom: 0.3em; }
+  .overlay p  { font-size: 1.2em; }
 
-  .overlay p {
-    font-size: 1.2em;
-  }
-
-  /* Make text responsive */
   @media (max-width: 768px) {
     .overlay h1 { font-size: 2em; }
-    .overlay p { font-size: 1em; }
+    .overlay p  { font-size: 1em; }
   }
 </style>
 </head>
 <body>
 
-<!-- Video background -->
 <video id="bg-video" autoplay muted loop playsinline>
   <source src="demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
 
-<!-- Overlay text -->
+<div class="overlay-bg"></div>
+
 <div class="overlay">
   <h1>SOID System Demo</h1>
   <p>Showcasing IT Process Improvement Tools</p>
